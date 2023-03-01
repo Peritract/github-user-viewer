@@ -26,12 +26,12 @@ class TestGetGithubUserDetails:
         requests_mock.get("https://api.github.com/users/test",
                           status_code=400)
 
-        with pytest.raises(APIError) as err:
+        with pytest.raises(APIError) as err_info:
             get_github_user_details("test")
 
-            assert isinstance(err, APIError)
-            assert err.message == "Invalid username."
-            assert err.code == 400
+        assert isinstance(err_info.value, APIError)
+        assert err_info.value.message == "Invalid username."
+        assert err_info.value.code == 400
 
     def test_raises_error_on_500(self, requests_mock):
         """Checks that the function raises an appropriate exception if the API
@@ -40,12 +40,12 @@ class TestGetGithubUserDetails:
         requests_mock.get("https://api.github.com/users/test",
                           status_code=500)
 
-        with pytest.raises(APIError) as err:
+        with pytest.raises(APIError) as error_info:
             get_github_user_details("test")
 
-            assert isinstance(err, APIError)
-            assert err.message == "Server error."
-            assert err.code == 500
+        assert isinstance(error_info.value, APIError)
+        assert error_info.value.message == "Server error."
+        assert error_info.value.code == 500
 
     def test_calls_the_api(self, requests_mock):
         """Checks that the function actually attempts to call the API."""
