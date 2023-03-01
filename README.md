@@ -13,7 +13,7 @@ Run the program with `python main.py`.
 ## Testing
 
 - Run all tests with `pytest`
-- Check test coverage with `pytest --cov`
+- Check test coverage with `pytest --cov --cov-report=term-missing`
 
 ## Linting
 
